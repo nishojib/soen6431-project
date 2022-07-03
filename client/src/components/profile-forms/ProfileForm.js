@@ -3,7 +3,6 @@ import { Link, useMatch, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
-import {useForm} from 'react-hook-form';
 
 /*
   NOTE: declare initialState outside of component
@@ -35,9 +34,7 @@ const ProfileForm = ({
   const creatingProfile = useMatch('/create-profile');
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
-  
-  const {register,handleSubmit} = useForm();
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -81,8 +78,7 @@ const ProfileForm = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
-    // e.preventDefault();
-    console.log(formData.company);
+    e.preventDefault();
     createProfile(formData, navigate, profile ? true : false);
   };
 
@@ -98,7 +94,7 @@ const ProfileForm = ({
           : ' Add some changes to your profile'}
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
           <select name="status" value={status} onChange={onChange}>
             <option>* Select Professional Status</option>
@@ -120,7 +116,8 @@ const ProfileForm = ({
             type="text"
             placeholder="Company"
             name="company"
-            {...register('company')}
+            value={company}
+            onChange={onChange}
           />
           <small className="form-text">
             Could be your own company or one you work for
@@ -131,7 +128,8 @@ const ProfileForm = ({
             type="text"
             placeholder="Website"
             name="website"
-            {...register('website')}
+            value={website}
+            onChange={onChange}
           />
           <small className="form-text">
             Could be your own or a company website
@@ -142,7 +140,8 @@ const ProfileForm = ({
             type="text"
             placeholder="Location"
             name="location"
-            {...register('location')}
+            value={location}
+            onChange={onChange}
           />
           <small className="form-text">
             City & state suggested (eg. Boston, MA)
@@ -153,7 +152,8 @@ const ProfileForm = ({
             type="text"
             placeholder="* Skills"
             name="skills"
-            {...register('skills')}
+            value={skills}
+            onChange={onChange}
           />
           <small className="form-text">
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
@@ -164,7 +164,8 @@ const ProfileForm = ({
             type="text"
             placeholder="Github Username"
             name="githubusername"
-            {...register('githubusername')}
+            value={githubusername}
+            onChange={onChange}
           />
           <small className="form-text">
             If you want your latest repos and a Github link, include your
@@ -175,7 +176,8 @@ const ProfileForm = ({
           <textarea
             placeholder="A short bio of yourself"
             name="bio"
-            {...register('bio')}
+            value={bio}
+            onChange={onChange}
           />
           <small className="form-text">Tell us a little about yourself</small>
         </div>
@@ -199,7 +201,8 @@ const ProfileForm = ({
                 type="text"
                 placeholder="Twitter URL"
                 name="twitter"
-                {...register('twitter')}
+                value={twitter}
+                onChange={onChange}
               />
             </div>
 
@@ -209,7 +212,8 @@ const ProfileForm = ({
                 type="text"
                 placeholder="Facebook URL"
                 name="facebook"
-                {...register('facebook')}
+                value={facebook}
+                onChange={onChange}
               />
             </div>
 
@@ -219,7 +223,8 @@ const ProfileForm = ({
                 type="text"
                 placeholder="YouTube URL"
                 name="youtube"
-                {...register('youtube')}
+                value={youtube}
+                onChange={onChange}
               />
             </div>
 
@@ -229,7 +234,8 @@ const ProfileForm = ({
                 type="text"
                 placeholder="Linkedin URL"
                 name="linkedin"
-                {...register('linkedin')}
+                value={linkedin}
+                onChange={onChange}
               />
             </div>
 
@@ -239,7 +245,8 @@ const ProfileForm = ({
                 type="text"
                 placeholder="Instagram URL"
                 name="instagram"
-                {...register('instagram')}
+                value={instagram}
+                onChange={onChange}
               />
             </div>
           </Fragment>
