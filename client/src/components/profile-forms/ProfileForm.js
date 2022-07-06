@@ -3,6 +3,7 @@ import { Link, useMatch, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
+import {useForm} from 'react-hook-form';
 
 /*
   NOTE: declare initialState outside of component
@@ -30,6 +31,10 @@ const ProfileForm = ({
   getCurrentProfile
 }) => {
   const [formData, setFormData] = useState(initialState);
+
+  const { register, handleSubmit } = useForm({ 
+    defaultValues: formData
+  });
 
   const creatingProfile = useMatch('/create-profile');
 
@@ -59,27 +64,8 @@ const ProfileForm = ({
     }
   }, [loading, getCurrentProfile, profile]);
 
-  const {
-    company,
-    website,
-    location,
-    status,
-    skills,
-    githubusername,
-    bio,
-    twitter,
-    facebook,
-    linkedin,
-    youtube,
-    instagram
-  } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    createProfile(formData, navigate, profile ? true : false);
+  const onSubmit = (data) => {
+    createProfile(data, navigate, profile ? true : false);
   };
 
   return (
@@ -94,9 +80,9 @@ const ProfileForm = ({
           : ' Add some changes to your profile'}
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit={onSubmit}>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
-          <select name="status" value={status} onChange={onChange}>
+          <select {...register('status')}>
             <option>* Select Professional Status</option>
             <option value="Developer">Developer</option>
             <option value="Junior Developer">Junior Developer</option>
@@ -112,61 +98,31 @@ const ProfileForm = ({
           </small>
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            placeholder="Company"
-            name="company"
-            value={company}
-            onChange={onChange}
-          />
+          <Input placeholder="Company" {...register('company')} />
           <small className="form-text">
             Could be your own company or one you work for
           </small>
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            placeholder="Website"
-            name="website"
-            value={website}
-            onChange={onChange}
-          />
+          <Input placeholder="Website" {...register('website')} />
           <small className="form-text">
             Could be your own or a company website
           </small>
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            placeholder="Location"
-            name="location"
-            value={location}
-            onChange={onChange}
-          />
+          <Input placeholder="Location" {...register('location')} />
           <small className="form-text">
             City & state suggested (eg. Boston, MA)
           </small>
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            placeholder="* Skills"
-            name="skills"
-            value={skills}
-            onChange={onChange}
-          />
+          <Input placeholder="Skills" {...register("skills")} />
           <small className="form-text">
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
           </small>
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            placeholder="Github Username"
-            name="githubusername"
-            value={githubusername}
-            onChange={onChange}
-          />
+          <Input placeholder="Github Username" {...register("githubusername")} />
           <small className="form-text">
             If you want your latest repos and a Github link, include your
             username
@@ -175,9 +131,7 @@ const ProfileForm = ({
         <div className="form-group">
           <textarea
             placeholder="A short bio of yourself"
-            name="bio"
-            value={bio}
-            onChange={onChange}
+            {...register('bio')}
           />
           <small className="form-text">Tell us a little about yourself</small>
         </div>
@@ -197,57 +151,27 @@ const ProfileForm = ({
           <Fragment>
             <div className="form-group social-input">
               <i className="fab fa-twitter fa-2x" />
-              <input
-                type="text"
-                placeholder="Twitter URL"
-                name="twitter"
-                value={twitter}
-                onChange={onChange}
-              />
+              <Input placeholder="Twitter URL" {...register("twitter")} />
             </div>
 
             <div className="form-group social-input">
               <i className="fab fa-facebook fa-2x" />
-              <input
-                type="text"
-                placeholder="Facebook URL"
-                name="facebook"
-                value={facebook}
-                onChange={onChange}
-              />
+              <Input placeholder="Facebook URL" {...register("facebook")} />
             </div>
 
             <div className="form-group social-input">
               <i className="fab fa-youtube fa-2x" />
-              <input
-                type="text"
-                placeholder="YouTube URL"
-                name="youtube"
-                value={youtube}
-                onChange={onChange}
-              />
+              <Input placeholder="Youtube URL" {...register("youtube")} />
             </div>
 
             <div className="form-group social-input">
               <i className="fab fa-linkedin fa-2x" />
-              <input
-                type="text"
-                placeholder="Linkedin URL"
-                name="linkedin"
-                value={linkedin}
-                onChange={onChange}
-              />
+              <Input placeholder="Linkedin URL" {...register('linkedin')} />
             </div>
 
             <div className="form-group social-input">
               <i className="fab fa-instagram fa-2x" />
-              <input
-                type="text"
-                placeholder="Instagram URL"
-                name="instagram"
-                value={instagram}
-                onChange={onChange}
-              />
+              <Input placeholder="Instagram URL" {...register('instagram')} />
             </div>
           </Fragment>
         )}
@@ -274,3 +198,9 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
   ProfileForm
 );
+
+const Input = ({ type = 'text', placeholder, ...rest }) => {
+  return (
+    <input type={type} placeholder={placeholder} {...rest} />
+  )
+}
