@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/post';
 import {useForm} from 'react-hook-form';
 
 const CommentForm = ({ postId, addComment }) => {
-  const [text, setText] = useState('');
-  const { register, handleSubmit } = useForm({ 
-    defaultValues: text
+  
+  const { register, handleSubmit,reset } = useForm({ 
+    defaultValues: ''
   });
   const onSubmit = (data) => {
-    addComment(data.postId, { text });
-    setText('');
+    addComment(postId, data );
+    reset();
+    
   };
 
   return (
@@ -23,15 +24,14 @@ const CommentForm = ({ postId, addComment }) => {
       
      
       
-        <Input
-          // name='text'
-          // cols='30'
-          // rows='5'
+        <textarea
+          cols='30'
+          rows='5'
           placeholder='Comment the post'
           // value={text}
           // onChange={e => setText(e.target.value)}
           // required
-          {...register('text')}
+          {...register('text',{required:true})}
         />
         <input type='submit' className='btn btn-dark my-1' value='Submit' />
       </form>
@@ -47,9 +47,3 @@ export default connect(
   null,
   { addComment }
 )(CommentForm);
-
-const Input = ({ type = 'text', placeholder, ...rest }) => {
-  return (
-    <textarea type={type} placeholder={placeholder} {...rest} />
-  )
-}
