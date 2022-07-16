@@ -17,6 +17,17 @@ const Post = require('../../models/Post');
 // @access   Private
 router.get('/me', auth, async (req, res) => {
   try {
+
+    const options = {
+      uri: encodeURI(
+        `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+      ),
+      method: 'GET',
+      headers: {
+        'user-agent': 'node.js',
+        Authorization: `token ${config.get('githubToken')}`
+      }
+    };
     const profile = await Profile.findOne({
       user: req.user.id
     }).populate('user', ['name', 'avatar']);
@@ -31,6 +42,8 @@ router.get('/me', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+
 
 // @route    POST api/profile
 // @desc     Create or update user profile

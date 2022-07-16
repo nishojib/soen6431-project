@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 const Alert = ({ alerts }) => (
-  <div className="alert-wrapper">
+  <Alertdiv>
     {alerts.map((alert) => (
       <div key={alert.id} className={`alert alert-${alert.alertType}`}>
         {alert.msg}
       </div>
     ))}
-  </div>
+  </Alertdiv>
 );
 
 Alert.propTypes = {
@@ -21,3 +22,10 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Alert);
+
+const Alertdiv = styled.div`
+  position: fixed;
+  top: 4rem;
+  right: 2rem;
+  display: inline-block;
+`;

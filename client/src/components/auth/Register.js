@@ -4,6 +4,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -32,13 +33,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <section className="container">
-      <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead">
+    <Section>
+      <H1>Sign Up</H1>
+      <P>
         <i className="fas fa-user" /> Create Your Account
-      </p>
-      <form className="form" onSubmit={onSubmit}>
-        <div className="form-group">
+      </P>
+      <Form onSubmit={onSubmit}>
+        <FormGroup>
           <input
             type="text"
             placeholder="Name"
@@ -46,8 +47,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={name}
             onChange={onChange}
           />
-        </div>
-        <div className="form-group">
+        </FormGroup>
+        <FormGroup>
           <input
             type="email"
             placeholder="Email Address"
@@ -55,12 +56,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={email}
             onChange={onChange}
           />
-          <small className="form-text">
+          <FormText>
             This site uses Gravatar so if you want a profile image, use a
             Gravatar email
-          </small>
-        </div>
-        <div className="form-group">
+          </FormText>
+        </FormGroup>
+        <FormGroup>
           <input
             type="password"
             placeholder="Password"
@@ -68,8 +69,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={password}
             onChange={onChange}
           />
-        </div>
-        <div className="form-group">
+        </FormGroup>
+        <FormGroup>
           <input
             type="password"
             placeholder="Confirm Password"
@@ -77,13 +78,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={password2}
             onChange={onChange}
           />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
-      </form>
-      <p className="my-1">
+        </FormGroup>
+        <input type="submit" value="Register" />
+      </Form>
+      <LoginLink>
         Already have an account? <Link to="/login">Sign In</Link>
-      </p>
-    </section>
+      </LoginLink>
+    </Section>
   );
 };
 
@@ -98,3 +99,51 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { setAlert, register })(Register);
+
+const Section = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+`;
+const H1 = styled.div`
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+`;
+const P = styled.div`
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+`;
+const Form = styled.form`
+  >input{
+    display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  }
+`;
+const FormGroup = styled.div`
+  margin: 1.2rem 0;
+  >input{
+    display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  }
+`;
+
+const LoginLink = styled.div`
+   margin: 1rem 0;
+`;
+
+const FormText = styled.div`
+  display: block;
+  margin-top: 0.3rem;
+  color: #888;
+`;

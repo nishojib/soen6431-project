@@ -6,6 +6,7 @@ import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
 import { getCurrentProfile, deleteAccount } from '../../actions/profile';
+import styled from 'styled-components';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -18,32 +19,34 @@ const Dashboard = ({
   }, [getCurrentProfile]);
 
   return (
-    <section className="container">
-      <h1 className="large text-primary">Dashboard</h1>
-      <p className="lead">
+    <Section >
+      <H1>Dashboard</H1>
+      <P>
         <i className="fas fa-user" /> Welcome {user && user.name}
-      </p>
+      </P>
       {profile !== null ? (
         <>
           <DashboardActions />
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
 
-          <div className="my-2">
-            <button className="btn btn-danger" onClick={() => deleteAccount()}>
+          <Deletediv>
+            <Deletebtn onClick={() => deleteAccount()}>
               <i className="fas fa-user-minus" /> Delete My Account
-            </button>
-          </div>
+            </Deletebtn>
+          </Deletediv>
         </>
       ) : (
         <>
-          <p>You have not yet setup a profile, please add some info</p>
-          <Link to="/create-profile" className="btn btn-primary my-1">
-            Create Profile
-          </Link>
+          <Ptag>You have not yet setup a profile, please add some info</Ptag>
+          <Profile>
+            <Link to="/create-profile">
+              Create Profile
+            </Link>
+          </Profile>
         </>
       )}
-    </section>
+    </Section>
   );
 };
 
@@ -62,3 +65,55 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
   Dashboard
 );
+
+const Section = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+`;
+const H1 = styled.h1`
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+
+`;
+const P = styled.div`
+   font-size: 1.5rem;
+  margin-bottom: 1rem;
+`;
+const Deletediv = styled.div`
+  margin: 2rem 0;
+`;
+const Deletebtn = styled.div`
+  display: inline-block;
+  background: var(--light-color);
+  color: #333;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s ease-in;
+  outline: none;
+  background: var(--danger-color);
+  color: #fff;
+`;
+const Profile = styled.div`
+  display: inline-block;
+  background: var(--light-color);
+  color: #333;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s ease-in;
+  outline: none;
+  background: var(--primary-color);
+  color: #fff;
+`;
+const Ptag = styled.div``;
