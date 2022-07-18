@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExperience } from '../../actions/profile';
-
+import {useForm} from 'react-hook-form';
 const AddExperience = ({ addExperience }) => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const initialState={
     company: '',
     title: '',
     location: '',
@@ -14,12 +14,20 @@ const AddExperience = ({ addExperience }) => {
     to: '',
     current: false,
     description: ''
+  }
+  const [formData, setFormData] = useState(initialState);
+
+  const { register,handleSubmit,reset} = useForm({
+    defaultValues:formData
   });
-
-  const { company, title, location, from, to, current, description } = formData;
-
+  
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const  onSubmit=(data) => {
+      addExperience(formData, data, navigate);
+      reset();
+    };
 
   return (
     <section className="container">
@@ -31,76 +39,80 @@ const AddExperience = ({ addExperience }) => {
       <small>* = required field</small>
       <form
         className="form"
-        onSubmit={(e) => {
+        onSubmit={handleSubmit(onSubmit)}>
+        {/* ----------------
+         onSubmit={(e) => {
           e.preventDefault();
           addExperience(formData, navigate);
         }}
-      >
+      > -------------------
+      */}
         <div className="form-group">
-          <input
+          <Input
             type="text"
             placeholder="* Job Title"
-            name="title"
-            value={title}
-            onChange={onChange}
             required
+            {...register("title",{required:true})}
+            onChange={onChange}
           />
+          
         </div>
         <div className="form-group">
-          <input
+          <Input
             type="text"
             placeholder="* Company"
-            name="company"
-            value={company}
-            onChange={onChange}
-            required
+            {...register("company",{required:true})}
           />
         </div>
         <div className="form-group">
-          <input
+          <Input
             type="text"
             placeholder="Location"
-            name="location"
-            value={location}
-            onChange={onChange}
+            {...register("location")}
           />
         </div>
         <div className="form-group">
           <h4>From Date</h4>
-          <input type="date" name="from" value={from} onChange={onChange} />
+          <Input 
+            type="date" 
+            {...register("from")}
+          />
         </div>
         <div className="form-group">
           <p>
-            <input
+            <Input
               type="checkbox"
-              name="current"
-              checked={current}
-              value={current}
-              onChange={() => {
-                setFormData({ ...formData, current: !current });
-              }}
+              // name="current"
+              // checked={current}
+              // value={current}
+              // onChange={() => {
+              //   setFormData({ ...formData, current: !current });
+              // }}
+              {...register("current")}
             />{' '}
             Current Job
           </p>
         </div>
         <div className="form-group">
           <h4>To Date</h4>
-          <input
+          <Input
             type="date"
-            name="to"
-            value={to}
-            onChange={onChange}
-            disabled={current}
+            // name="to"
+            // value={to}
+            // onChange={onChange}
+            // disabled={current}
+            {...register("to")}
           />
         </div>
         <div className="form-group">
           <textarea
-            name="description"
+            // name="description"
             cols="30"
             rows="5"
             placeholder="Job Description"
-            value={description}
-            onChange={onChange}
+            // value={description}
+            // onChange={onChange}
+            {...register('text',{required:true})}
           />
         </div>
         <input type="submit" className="btn btn-primary my-1" />
@@ -117,3 +129,10 @@ AddExperience.propTypes = {
 };
 
 export default connect(null, { addExperience })(AddExperience);
+
+
+const Input = ({ type = 'text', placeholder, ...rest }) => {
+  return (
+    <input type={type} placeholder={placeholder} {...rest} />
+  )
+}
