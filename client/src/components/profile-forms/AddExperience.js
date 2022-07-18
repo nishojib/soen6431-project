@@ -99,7 +99,7 @@ const AddExperience = ({ addExperience }) => {
             type="date"
             // name="to"
             // value={to}
-            // onChange={onChange}
+            onChange={onChange}
             // disabled={current}
             {...register("to")}
           />
@@ -111,7 +111,7 @@ const AddExperience = ({ addExperience }) => {
             rows="5"
             placeholder="Job Description"
             // value={description}
-            // onChange={onChange}
+            onChange={onChange}
             {...register('text',{required:true})}
           />
         </div>
