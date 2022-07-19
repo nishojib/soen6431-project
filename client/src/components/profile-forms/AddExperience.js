@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,17 +15,15 @@ const AddExperience = ({ addExperience }) => {
     current: false,
     description: ''
   }
-  const [formData, setFormData] = useState(initialState);
-
   const { register,handleSubmit,reset} = useForm({
-    defaultValues:formData
+    defaultValues:initialState
   });
   
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // const onChange = (e) =>
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const  onSubmit=(data) => {
-      addExperience(formData, data, navigate);
+      addExperience( data, navigate);
       reset();
     };
 
@@ -48,24 +46,23 @@ const AddExperience = ({ addExperience }) => {
       > -------------------
       */}
         <div className="form-group">
-          <Input
+          <input
             type="text"
             placeholder="* Job Title"
-            required
             {...register("title",{required:true})}
-            onChange={onChange}
+            // onChange={onChange}
           />
           
         </div>
         <div className="form-group">
-          <Input
+          <input
             type="text"
             placeholder="* Company"
             {...register("company",{required:true})}
           />
         </div>
         <div className="form-group">
-          <Input
+          <input
             type="text"
             placeholder="Location"
             {...register("location")}
@@ -73,14 +70,14 @@ const AddExperience = ({ addExperience }) => {
         </div>
         <div className="form-group">
           <h4>From Date</h4>
-          <Input 
+          <input 
             type="date" 
             {...register("from")}
           />
         </div>
         <div className="form-group">
           <p>
-            <Input
+            <input
               type="checkbox"
               // name="current"
               // checked={current}
@@ -95,11 +92,11 @@ const AddExperience = ({ addExperience }) => {
         </div>
         <div className="form-group">
           <h4>To Date</h4>
-          <Input
+          <input
             type="date"
             // name="to"
             // value={to}
-            onChange={onChange}
+            // onChange={onChange}
             // disabled={current}
             {...register("to")}
           />
@@ -111,8 +108,8 @@ const AddExperience = ({ addExperience }) => {
             rows="5"
             placeholder="Job Description"
             // value={description}
-            onChange={onChange}
-            {...register('text',{required:true})}
+            // onChange={onChange}
+            {...register('description',{required:true})}
           />
         </div>
         <input type="submit" className="btn btn-primary my-1" />
@@ -131,8 +128,8 @@ AddExperience.propTypes = {
 export default connect(null, { addExperience })(AddExperience);
 
 
-const Input = ({ type = 'text', placeholder, ...rest }) => {
-  return (
-    <input type={type} placeholder={placeholder} {...rest} />
-  )
-}
+// const input = ({ type = 'text', placeholder, ...rest }) => {
+//   return (
+//     <input type={type} placeholder={placeholder} {...rest} />
+//   )
+// }
