@@ -8,23 +8,23 @@ const ProfileAbout = ({
     user: { name }
   }
 }) => (
-  <div className='profile-about bg-light p-2'>
+  <Maincontainer>
     {bio && (
       <Fragment>
-        <h2 className='text-primary'>{name.trim().split(' ')[0]}s Bio</h2>
+        <H2>{name.trim().split(' ')[0]}s Bio</H2>
         <p>{bio}</p>
-        <div className='line' />
+        <Line/>
       </Fragment>
     )}
-    <h2 className='text-primary'>Skill Set</h2>
-    <div className='skills'>
+    <H2>Skill Set</H2>
+    <Skills>
       {skills.map((skill, index) => (
-        <div key={index} className='p-1'>
+        <Item key={index} >
           <i className='fas fa-check' /> {skill}
-        </div>
+        </Item>
       ))}
-    </div>
-  </div>
+    </Skills>
+  </Maincontainer>
 );
 
 ProfileAbout.propTypes = {
@@ -32,3 +32,35 @@ ProfileAbout.propTypes = {
 };
 
 export default ProfileAbout;
+
+const Maincontainer = styled.div`
+    grid-area: about;
+  text-align: center;
+  background: var(--light-color);
+  color: #333;
+  border: #ccc solid 1px;
+  padding: 2rem;
+  >h2{
+    
+
+  }
+`;
+const H2 = styled.h3`
+  color: var(--primary-color);
+`;
+
+const Skills = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+const Line = styled.div`
+   height: 1px;
+  background: #ccc;
+  margin: 1.5rem 0;
+`;
+
+const Item = styled.div`
+   padding: 1rem;
+`;

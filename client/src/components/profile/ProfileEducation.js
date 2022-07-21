@@ -6,7 +6,7 @@ const ProfileEducation = ({
   education: { school, degree, fieldofstudy, current, to, from, description }
 }) => (
   <div>
-    <h3 className="text-dark">{school}</h3>
+    <H3>{school}</H3>
     <p>
       {formatDate(from)} - {to ? formatDate(to) : 'Now'}
     </p>
@@ -27,3 +27,7 @@ ProfileEducation.propTypes = {
 };
 
 export default ProfileEducation;
+
+const H3 = styled.h3`
+   color: var(--dark-color);
+`;

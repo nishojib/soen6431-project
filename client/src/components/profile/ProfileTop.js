@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const ProfileTop = ({
   profile: {
@@ -12,14 +13,14 @@ const ProfileTop = ({
   }
 }) => {
   return (
-    <div className="profile-top bg-primary p-2">
+    <Profiletop>
       <img className="round-img my-1" src={avatar} alt="" />
-      <h1 className="large">{name}</h1>
-      <p className="lead">
+      <H1 className="large">{name}</H1>
+      <P className="lead">
         {status} {company ? <span> at {company}</span> : null}
-      </p>
-      <p>{location ? <span>{location}</span> : null}</p>
-      <div className="icons my-1">
+      </P>
+      <P>{location ? <span>{location}</span> : null}</P>
+      <Icons>
         {website ? (
           <a href={website} target="_blank" rel="noopener noreferrer">
             <i className="fas fa-globe fa-2x" />
@@ -39,8 +40,8 @@ const ProfileTop = ({
                 </a>
               ))
           : null}
-      </div>
-    </div>
+      </Icons>
+    </Profiletop>
   );
 };
 
@@ -49,3 +50,36 @@ ProfileTop.propTypes = {
 };
 
 export default ProfileTop;
+
+const Profiletop = styled.div`
+  grid-area: top;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 2rem;
+  > img{
+    width: 250px;
+    border-radius: 50%;
+    margin: 1rem 0;
+  }
+
+`;
+
+const H1 = styled.h1`
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+`;
+const P = styled.p`
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+`;
+const Icons = styled.div`
+  color: #fff;
+  margin: 0 0.3rem;
+  margin: 1rem 0;
+`;

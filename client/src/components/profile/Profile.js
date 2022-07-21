@@ -9,6 +9,7 @@ import ProfileExperience from './ProfileExperience';
 import ProfileEducation from './ProfileEducation';
 import ProfileGithub from './ProfileGithub';
 import { getProfileById } from '../../actions/profile';
+import styled from 'styled-components';
 
 const Profile = ({ getProfileById, profile: { profile }, auth }) => {
   const { id } = useParams();
@@ -17,26 +18,30 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
   }, [getProfileById, id]);
 
   return (
-    <section className="container">
+    <Section>
       {profile === null ? (
         <Spinner />
       ) : (
         <Fragment>
-          <Link to="/profiles" className="btn btn-light">
-            Back To Profiles
-          </Link>
+          <Profiles>
+            <Link to="/profiles">
+              Back To Profiles
+            </Link>
+          </Profiles>
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (
-              <Link to="/edit-profile" className="btn btn-dark">
+              <Editprofiles>
+              <Link to="/edit-profile">
                 Edit Profile
               </Link>
+              </Editprofiles>
             )}
-          <div className="profile-grid my-1">
+          <Profilegrid>
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
-            <div className="profile-exp bg-white p-2">
-              <h2 className="text-primary">Experience</h2>
+            <Profileexp>
+              <h2 >Experience</h2>
               {profile.experience.length > 0 ? (
                 <Fragment>
                   {profile.experience.map((experience) => (
@@ -47,12 +52,12 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
                   ))}
                 </Fragment>
               ) : (
-                <h4>No experience credentials</h4>
+                <H4>No experience credentials</H4>
               )}
-            </div>
+            </Profileexp>
 
-            <div className="profile-edu bg-white p-2">
-              <h2 className="text-primary">Education</h2>
+            <Profileedu>
+              <h2 >Education</h2>
               {profile.education.length > 0 ? (
                 <Fragment>
                   {profile.education.map((education) => (
@@ -63,17 +68,17 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
                   ))}
                 </Fragment>
               ) : (
-                <h4>No education credentials</h4>
+                <H4>No education credentials</H4>
               )}
-            </div>
+            </Profileedu>
 
             {profile.githubusername && (
               <ProfileGithub username={profile.githubusername} />
             )}
-          </div>
+          </Profilegrid>
         </Fragment>
       )}
-    </section>
+    </Section>
   );
 };
 
@@ -89,3 +94,76 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { getProfileById })(Profile);
+
+const Section = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+`;
+
+const Profiles = styled.div`
+  background: var(--light-color);
+  color: #333;display: inline-block;
+  background: var(--light-color);
+  color: #333;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s ease-in;
+  outline: none;
+`;
+const Editprofiles = styled.div`
+  background: var(--dark-color);
+  color: #fff;
+  display: inline-block;
+  background: var(--light-color);
+  color: #333;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s ease-in;
+  outline: none;
+`;
+
+const Profilegrid = styled.div`
+  display: grid;
+  grid-template-areas:
+    'top top'
+    'about about'
+    'exp edu'
+    'github github';
+  grid-gap: 1rem;
+  margin: 1rem 0;
+`;
+const Profileexp = styled.div`
+  grid-area: exp;
+  background: #fff;
+  color: #333;
+  border: #ccc solid 1px;
+  padding: 2rem;
+  >h2{
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+  }
+
+`;
+const Profileedu = styled.div`
+  grid-area: edu;
+  background: #fff;
+  color: #333;
+  border: #ccc solid 1px;
+  padding: 2rem;
+  >h2{
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+  }
+`;
+
+const H4 = styled.h4``;

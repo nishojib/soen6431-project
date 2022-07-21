@@ -81,7 +81,7 @@ const P2 = styled.div`
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
 `;
-const Button = styled.div`
+const Button = styled.button`
   display: inline-block;
   background: var(--light-color);
   color: #333;

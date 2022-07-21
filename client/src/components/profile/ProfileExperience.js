@@ -6,7 +6,7 @@ const ProfileExperience = ({
   experience: { company, title, location, current, to, from, description }
 }) => (
   <div>
-    <h3 className="text-dark">{company}</h3>
+    <H3>{company}</H3>
     <p>
       {formatDate(from)} - {to ? formatDate(to) : 'Now'}
     </p>
@@ -27,3 +27,7 @@ ProfileExperience.propTypes = {
 };
 
 export default ProfileExperience;
+
+const H3 = styled.h3`
+   color: var(--dark-color);
+`;
