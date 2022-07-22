@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/post';
 import styled from 'styled-components';
+import useCommentForm from '../../customhooks/useCommentForm';
 
 const CommentForm = ({ postId, addComment }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useCommentForm('');
 
   return (
     <Postfrom>

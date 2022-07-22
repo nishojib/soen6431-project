@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getGithubRepos } from '../../actions/profile';
+import styled from 'styled-components';
 
 const ProfileGithub = ({ username, getGithubRepos, repos }) => {
   useEffect(() => {
@@ -62,7 +63,7 @@ const H2 = styled.h2`
   margin: 1rem 0;
 
 `;
-const repo = styled.div`
+const Repo = styled.div`
   display: flex;
   > div:first-child {
   flex: 7;
