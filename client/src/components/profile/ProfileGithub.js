@@ -3,16 +3,34 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getGithubRepos } from '../../actions/profile';
 
+import styled from 'styled-components';
+
+const StyledProfileGithub = styled.div`
+  grid-area: github;
+`;
+const StyledRepo = styled.div`
+  display: flex;
+
+  & first-child {
+    flex: 7;
+    flex-basis: 70%;
+  }
+  & last-child {
+    flex: 3;
+    flex-basis: 20%;
+  }
+`;
+
 const ProfileGithub = ({ username, getGithubRepos, repos }) => {
   useEffect(() => {
     getGithubRepos(username);
   }, [getGithubRepos, username]);
 
   return (
-    <div className="profile-github">
+    <StyledProfileGithub>
       <h2 className="text-primary my-1">Github Repos</h2>
       {repos.map(repo => (
-        <div key={repo.id} className="repo bg-white p-1 my-1">
+        <StyledRepo key={repo.id} className="repo bg-white p-1 my-1">
           <div>
             <h4>
               <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
@@ -32,9 +50,9 @@ const ProfileGithub = ({ username, getGithubRepos, repos }) => {
               <li className="badge badge-light">Forks: {repo.forks_count}</li>
             </ul>
           </div>
-        </div>
+        </StyledRepo>
       ))}
-    </div>
+    </StyledProfileGithub>
   );
 };
 

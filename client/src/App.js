@@ -24,6 +24,7 @@ import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
+//import './components/posts/Form.css'
 
 const App = () => {
   useEffect(() => {

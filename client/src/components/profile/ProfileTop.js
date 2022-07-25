@@ -1,6 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styled from 'styled-components';
+
+const StyledProfileTop = styled.div`
+  grid-area: top;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+const StyledImage = styled.img`
+  width: 250px;
+`;
+
+const StyledIcons = styled.div`
+  & a {
+    color: #fff;
+    margin: 0 0.3rem;
+  }
+  & a:hover {
+    color: var(--dark-color);
+`;
+
 const ProfileTop = ({
   profile: {
     status,
@@ -12,14 +36,14 @@ const ProfileTop = ({
   }
 }) => {
   return (
-    <div className="profile-top bg-primary p-2">
-      <img className="round-img my-1" src={avatar} alt="" />
+    <StyledProfileTop className="bg-primary p-2">
+      <StyledImage className="round-img my-1" src={avatar} alt="" />
       <h1 className="large">{name}</h1>
       <p className="lead">
         {status} {company ? <span> at {company}</span> : null}
       </p>
       <p>{location ? <span>{location}</span> : null}</p>
-      <div className="icons my-1">
+      <StyledIcons className="my-1">
         {website ? (
           <a href={website} target="_blank" rel="noopener noreferrer">
             <i className="fas fa-globe fa-2x" />
@@ -39,8 +63,8 @@ const ProfileTop = ({
                 </a>
               ))
           : null}
-      </div>
-    </div>
+      </StyledIcons>
+    </StyledProfileTop>
   );
 };
 

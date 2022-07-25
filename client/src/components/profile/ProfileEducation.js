@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import formatDate from '../../utils/formatDate';
 
+const StyledProfileEducation = styled.div`
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: #ccc 1px dotted;
+`;
+
 const ProfileEducation = ({
-  education: { school, degree, fieldofstudy, current, to, from, description }
+  education: { school, degree, fieldofstudy, current, to, from, description },
 }) => (
-  <div>
+  <StyledProfileEducation>
     <h3 className="text-dark">{school}</h3>
     <p>
       {formatDate(from)} - {to ? formatDate(to) : 'Now'}
@@ -19,11 +26,11 @@ const ProfileEducation = ({
     <p>
       <strong>Description: </strong> {description}
     </p>
-  </div>
+  </StyledProfileEducation>
 );
 
 ProfileEducation.propTypes = {
-  education: PropTypes.object.isRequired
+  education: PropTypes.object.isRequired,
 };
 
 export default ProfileEducation;

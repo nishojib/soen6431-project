@@ -9,6 +9,24 @@ import ProfileExperience from './ProfileExperience';
 import ProfileEducation from './ProfileEducation';
 import ProfileGithub from './ProfileGithub';
 import { getProfileById } from '../../actions/profile';
+import styled from 'styled-components';
+//import './Profile.css';
+
+const StyledProfileGrid = styled.div`
+  display: grid;
+  grid-template-areas:
+    'top top'
+    'about about'
+    'exp edu'
+    'github github';
+  grid-gap: 1rem;
+`;
+const StyledEdu = styled.div`
+  grid-area: edu;
+`;
+const StyledExp = styled.div`
+  grid-area: exp;
+`;
 
 const Profile = ({ getProfileById, profile: { profile }, auth }) => {
   const { id } = useParams();
@@ -32,10 +50,10 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
                 Edit Profile
               </Link>
             )}
-          <div className="profile-grid my-1">
+          <StyledProfileGrid className="my-1">
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
-            <div className="profile-exp bg-white p-2">
+            <StyledExp className="bg-white p-2">
               <h2 className="text-primary">Experience</h2>
               {profile.experience.length > 0 ? (
                 <Fragment>
@@ -49,9 +67,9 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
               ) : (
                 <h4>No experience credentials</h4>
               )}
-            </div>
+            </StyledExp>
 
-            <div className="profile-edu bg-white p-2">
+            <StyledEdu className="bg-white p-2">
               <h2 className="text-primary">Education</h2>
               {profile.education.length > 0 ? (
                 <Fragment>
@@ -65,12 +83,12 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
               ) : (
                 <h4>No education credentials</h4>
               )}
-            </div>
+            </StyledEdu>
 
             {profile.githubusername && (
               <ProfileGithub username={profile.githubusername} />
             )}
-          </div>
+          </StyledProfileGrid>
         </Fragment>
       )}
     </section>
@@ -80,12 +98,12 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
 Profile.propTypes = {
   getProfileById: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getProfileById })(Profile);

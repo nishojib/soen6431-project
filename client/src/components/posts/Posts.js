@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import PostItem from './PostItem';
 import PostForm from './PostForm';
 import { getPosts } from '../../actions/post';
+import './Posts.css';
 
+let number = 0;
 const Posts = ({ getPosts, post: { posts } }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
-
+  console.log(`Rendering for the ${++number}`);
   return (
     <section className="container">
       <h1 className="large text-primary">Posts</h1>
@@ -25,14 +27,13 @@ const Posts = ({ getPosts, post: { posts } }) => {
     </section>
   );
 };
-
 Posts.propTypes = {
   getPosts: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  post: state.post
+  post: state.post,
 });
 
 export default connect(mapStateToProps, { getPosts })(Posts);

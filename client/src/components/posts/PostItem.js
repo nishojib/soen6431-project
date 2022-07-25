@@ -4,6 +4,49 @@ import { Link } from 'react-router-dom';
 import formatDate from '../../utils/formatDate';
 import { connect } from 'react-redux';
 import { addLike, removeLike, deletePost } from '../../actions/post';
+import styled from 'styled-components';
+
+const StyledImage = styled.div`
+  width: 100px;
+`;
+/*
+const StyledDate = styled.div`
+  color: #aaa;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+`;
+
+const StyledComment = styled.div`
+  background: var(--light-color);
+  color: var(--primary-color);
+  padding: 0.1rem 0.2rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+`;
+*/
+const StyledPosts = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 2rem;
+  align-items: center;
+
+  & first-child {
+    text-align: center;
+  }
+
+  & post-date {
+    color: #aaa;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  & comment-count {
+    background: var(--light-color);
+    color: var(--primary-color);
+    padding: 0.1rem 0.2rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+  }
+`;
 
 const PostItem = ({
   addLike,
@@ -11,15 +54,16 @@ const PostItem = ({
   deletePost,
   auth,
   post: { _id, text, name, avatar, user, likes, comments, date },
-  showActions
+  showActions,
 }) => (
-  <div className="post bg-white p-1 my-1">
-    <div>
+  //<div className="post bg-white p-1 my-1">
+  <StyledPosts className="bg-white p-1 my-1">
+    <StyledImage>
       <Link to={`/profile/${user}`}>
         <img className="round-img" src={avatar} alt="" />
         <h4>{name}</h4>
       </Link>
-    </div>
+    </StyledImage>
     <div>
       <p className="my-1">{text}</p>
       <p className="post-date">Posted on {formatDate(date)}</p>
@@ -59,11 +103,11 @@ const PostItem = ({
         </Fragment>
       )}
     </div>
-  </div>
+  </StyledPosts>
 );
 
 PostItem.defaultProps = {
-  showActions: true
+  showActions: true,
 };
 
 PostItem.propTypes = {
@@ -72,11 +116,11 @@ PostItem.propTypes = {
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
-  showActions: PropTypes.bool
+  showActions: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { addLike, removeLike, deletePost })(

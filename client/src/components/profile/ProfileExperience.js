@@ -1,11 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import formatDate from '../../utils/formatDate';
+import styled from 'styled-components';
+
+const StyedExp = styled.div`
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: #ccc 1px dotted;
+
+  & h2 {
+    margin-bottom: 1rem;
+  }
+  & last-child {
+    border: 0;
+  }
+  & p {
+    margin: 0.5rem 0;
+  }
+`;
 
 const ProfileExperience = ({
-  experience: { company, title, location, current, to, from, description }
+  experience: { company, title, location, current, to, from, description },
 }) => (
-  <div>
+  <StyedExp>
     <h3 className="text-dark">{company}</h3>
     <p>
       {formatDate(from)} - {to ? formatDate(to) : 'Now'}
@@ -19,11 +36,11 @@ const ProfileExperience = ({
     <p>
       <strong>Description: </strong> {description}
     </p>
-  </div>
+  </StyedExp>
 );
 
 ProfileExperience.propTypes = {
-  experience: PropTypes.object.isRequired
+  experience: PropTypes.object.isRequired,
 };
 
 export default ProfileExperience;
