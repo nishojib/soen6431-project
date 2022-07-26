@@ -1,48 +1,31 @@
-import { FC } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
-import { RegisterFormData } from '../../model';
-import { setAlert } from '../../redux/actions/alert';
 import {
-  register as signup,
-  selectIsAuthenticated
-} from '../../redux/actions/auth';
+  FC,
+  FormEventHandler,
+  ForwardRefExoticComponent,
+  RefAttributes
+} from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { LinkProps } from 'react-router-dom';
+import { RegisterFormData } from '../../../model';
 
-const Register: FC = () => {
-  const { register, handleSubmit } = useForm<RegisterFormData>({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      password2: ''
-    }
-  });
+type RegisterViewProps = {
+  onSubmit: FormEventHandler<HTMLFormElement> | undefined;
+  register: UseFormRegister<RegisterFormData>;
+  link: ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>;
+};
 
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-
-  const onSubmit = async (data: RegisterFormData) => {
-    const { password, password2, name, email } = data;
-
-    if (password !== password2) {
-      dispatch(setAlert('Passwords do not match', 'danger'));
-    } else {
-      dispatch(signup({ name, email, password }));
-    }
-  };
-
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
-
+export const RegisterView: FC<RegisterViewProps> = ({
+  onSubmit,
+  register,
+  link: Link
+}) => {
   return (
     <section className="container">
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead">
         <i className="fas fa-user" /> Create Your Account
       </p>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
           <input type="text" placeholder="Name" {...register('name')} />
         </div>
@@ -81,5 +64,3 @@ const Register: FC = () => {
     </section>
   );
 };
-
-export default Register;

@@ -3,3 +3,9 @@ config/production.json
 config/default.json
 client/build
 client/.eslintcache
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/test-results/
+/playwright-report/
+/playwright/.cache/

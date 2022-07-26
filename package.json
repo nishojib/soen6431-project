@@ -27,6 +27,7 @@
     "react-hook-form": "^7.33.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.24.0",
     "concurrently": "^7.3.0",
     "nodemon": "^2.0.19"
   }

@@ -1,9 +1,17 @@
-import { FC } from 'react';
+import {
+  FC,
+  FormEventHandler,
+  ForwardRefExoticComponent,
+  RefAttributes
+} from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { LinkProps } from 'react-router-dom';
+import { LoginFormData } from '../../../model';
 
 type LoginViewProps = {
-  onSubmit: any;
-  register: any;
-  link: any;
+  onSubmit: FormEventHandler<HTMLFormElement> | undefined;
+  register: UseFormRegister<LoginFormData>;
+  link: ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>;
 };
 
 export const LoginView: FC<LoginViewProps> = ({
@@ -19,6 +27,7 @@ export const LoginView: FC<LoginViewProps> = ({
     <form className="form" onSubmit={onSubmit}>
       <div className="form-group">
         <input
+          id="email"
           type="email"
           placeholder="Email Address"
           {...register('email')}
@@ -26,12 +35,13 @@ export const LoginView: FC<LoginViewProps> = ({
       </div>
       <div className="form-group">
         <input
+          id="password"
           type="password"
           placeholder="Password"
           {...register('password', { minLength: 6 })}
         />
       </div>
-      <button type="submit" className="btn btn-primary">
+      <button id="submit" type="submit" className="btn btn-primary">
         Login
       </button>
     </form>
