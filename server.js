@@ -2,6 +2,28 @@ const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
 const cors = require('cors');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Dev Connector API',
+      description: 'Dev Connector API information',
+      version: '1.0.0'
+    },
+    servers: [
+      {
+        url: 'http://localhost:5001',
+        description: 'Development server'
+      }
+    ]
+  },
+  apis: ['./routes/api/*.js']
+};
+
+const swaggerDoc = swaggerJsDoc(swaggerOptions);
 
 const app = express();
 
@@ -11,6 +33,7 @@ connectDB();
 // Init Middleware
 app.use(express.json());
 app.use(cors());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
