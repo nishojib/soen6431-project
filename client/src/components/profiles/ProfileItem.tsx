@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { ProfileType } from '../../model';
@@ -17,8 +18,8 @@ const ProfileItem: FC<ProfileItemProps> = ({
     skills
   }
 }) => {
-  const renderSkills = skills.slice(0, 4).map((skill, index) => (
-    <li key={index} className="text-primary">
+  const renderSkills = skills.slice(0, 4).map((skill) => (
+    <li key={nanoid()} className="text-primary">
       <i className="fas fa-check" /> {skill}
     </li>
   ));

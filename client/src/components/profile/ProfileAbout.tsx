@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { FC, Fragment } from 'react';
 import { ProfileType } from '../../model';
 
@@ -12,8 +13,8 @@ const ProfileAbout: FC<ProfileAboutProps> = ({
     user: { name }
   }
 }) => {
-  const renderSkills = skills.map((skill, index) => (
-    <div key={index} className="p-1">
+  const renderSkills = skills.map((skill) => (
+    <div key={nanoid()} className="p-1">
       <i className="fas fa-check" /> {skill}
     </div>
   ));
@@ -27,7 +28,7 @@ const ProfileAbout: FC<ProfileAboutProps> = ({
           <div className="line" />
         </Fragment>
       )}
-      <h2 className="text-primary">Skill Set</h2>
+      <h2 className="text-primary">Skill Set</h2>``
       <div className="skills">{renderSkills}</div>
     </div>
   );

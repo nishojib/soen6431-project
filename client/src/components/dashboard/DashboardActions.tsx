@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-const DashboardActions: FC = () => (
+const DashboardActions = memo(() => (
   <div className="dash-buttons">
     <Link to="/edit-profile" className="btn btn-light">
       <i className="fas fa-user-circle text-primary" /> Edit Profile
@@ -13,6 +13,6 @@ const DashboardActions: FC = () => (
       <i className="fas fa-graduation-cap text-primary" /> Add Education
     </Link>
   </div>
-);
+));
 
 export default DashboardActions;
